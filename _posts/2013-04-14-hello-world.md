@@ -13,4 +13,4 @@ author:
 
 Immetra Technologies was borne out of neccessity. A neccessity of creation and invention. A mean to satisfy the urge to build. A burning passion for perfection.
 
-One line of codes at a time, let us build the new systems of tomorrow!
+One line of code at a time, let us build the new systems of tomorrow!
