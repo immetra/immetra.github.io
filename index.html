@@ -1,54 +1,101 @@
----
-layout: base
----
-<div class="blog-cover" style="background-image:url(/images/{{ site.inc.cover_image }});">
-    
-    <section>
-        <div class="container">
-            <h1>{{ site.inc.title }}</h1>
-            {% if site.inc.subtitle %}<h3>{{ site.inc.subtitle }}</h3>{% endif %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Immetra Technologies</title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed|Alegreya:700' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+    body {
+        color: #676758;
+        background-color: #fff;
+    }
+    h1 {
+        font-family: 'Alegreya', serif;
+        font-weight: 700;
+        line-height: 46px;
+        font-size: 46px;
+        margin: 0 0 43px 0;		
+	}	
+    h2 {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-weight: normal;
+        font-size: 21px;
+        line-height: 23px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin: 0 0 23px 0;			
+	}	
+    p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 15px;
+        line-height: 23px;	
+        margin: 0 0 23px 0;	
+	}
+    .container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-top: -250px;
+        margin-left: -450px;
+        clear: all;
+    }
+    .left {
+        float: left;
+        text-align: right;
+        width: 300px;
+        padding-right: 50px;
+    }
+    .left p {
+        font-size: 90%;
+    }
+    .right {
+        float: left;        
+        border-left: 5px solid #ddd;        
+        padding: 25px 50px;
+        width: 500px;        
+    }
+    p.regno {
+        font-size: 80%;
+    }
+
+</style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <p>
+                <img src="img/immetra_tech_logo.png" width="250">
+            </p>
+            <p>
+                <a href="mailto:sales@immetra.com">sales@immetra.com</a>
+            </p>
+            <p>
+                <strong>Immetra Technologies Sdn. Bhd.</strong><br>
+                A-5-10 Empire Tower SS16/1<br>
+                Subang Jaya, 47500<br>
+                Selangor, Malaysia
+            </p>
+            <p class="regno">
+                Co. Reg. No: 1140333-P<br>
+                MOF No: 1140333-PAAA
+            </p>
+        </div>
+        <div class="right">
+            <h1>Need code?</h1>
         
-            {% if site.inc.twitter %}
-            <a href="https://twitter.com/{{ site.inc.twitter }}" title="Follow on Twitter" target="_blank"><i class="icon icon-twitter"></i></a>
-            {% endif %}
-            {% if site.inc.facebook %}
-            <a href="http://facebook.com/{{ site.inc.facebook }}" title="Like on Facebook" target="_blank"><i class="icon icon-facebook"></i></a>
-            {% endif %}
-            <a href="/feed.xml" title="RSS Feed">
-                <i class="icon icon-rss"></i>
-            </a>
+            <h2>Let us help you.</h2>
+            
+            <p>We are a team of dynamic and capable web application developers. We can help you get that project done!</p>
+            
+            <p>These below are our usual bread and butter.</p>
+            
+            <p>
+                <br>
+                <img src="img/tools.png">
+            </p>
         </div>
-    </section>
-</div>
-
-
-<article class="container">
-{% for post in paginator.posts %}
-  {% unless post.draft %}
-    <section class="index">
-        <!-- {% if post.author.image %}<img src="/images/{{ post.author.image }}" class="avatar">{% endif %}-->
-        <div>
-            <h2 class="title"><a href="{{ post.url }}" rel="prefetch">{{ post.title }}</a></h2>
-            <p>{{ post.excerpt }}</p>
-            <div class="meta">
-                Written By <address>{{ post.author.name }}</address> &mdash;
-                <time pubdate datetime="{{ post.date | date: "%Y-%d-%B" }}" title="{{ post.date | date: "%B %d, %Y" }}">{{ post.date | date: "%B %d, %Y" }}</time>
-            </div>
-        </div>
-        <hr>
-    </section>
-    {% endunless %}
-    {% endfor %}
-    <section class="pagination" style="text-align:center">
-      {% if paginator.previous_page %}
-        {% if paginator.previous_page == 1 %}
-        <a href="/" class="btn btn-outline">‹ Newer</a>
-        {% else %}
-        <a href="/page{{ paginator.previous_page }}" class="btn btn-outline">‹ Newer</a>
-        {% endif %}
-      {% endif %}
-      {% if paginator.next_page %}
-        <a href="/page{{ paginator.next_page }}" class="btn btn-outline">Older ›</a>
-      {% endif %}
-    </section>
-</article>
+    </div>
+    
+</body>
+</html>
