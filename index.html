@@ -1,101 +1,773 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html class="no-js" lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Immetra Technologies</title>
-    <link href='http://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed|Alegreya:700' rel='stylesheet' type='text/css'>
-    <style type="text/css">
-    body {
-        color: #676758;
-        background-color: #fff;
-    }
-    h1 {
-        font-family: 'Alegreya', serif;
-        font-weight: 700;
-        line-height: 46px;
-        font-size: 46px;
-        margin: 0 0 43px 0;		
-	}	
-    h2 {
-        font-family: 'Roboto Condensed', sans-serif;
-        font-weight: normal;
-        font-size: 21px;
-        line-height: 23px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin: 0 0 23px 0;			
-	}	
-    p {
-        font-family: 'Roboto', sans-serif;
-        font-size: 15px;
-        line-height: 23px;	
-        margin: 0 0 23px 0;	
-	}
-    .container {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        margin-top: -250px;
-        margin-left: -450px;
-        clear: all;
-    }
-    .left {
-        float: left;
-        text-align: right;
-        width: 300px;
-        padding-right: 50px;
-    }
-    .left p {
-        font-size: 90%;
-    }
-    .right {
-        float: left;        
-        border-left: 5px solid #ddd;        
-        padding: 25px 50px;
-        width: 500px;        
-    }
-    p.regno {
-        font-size: 80%;
-    }
 
-</style>
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Immetra Technologies</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="js/modernizr.js"></script>
+    <script src="js/pace.min.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
 </head>
 
-<body>
-    <div class="container">
-        <div class="left">
-            <p>
-                <img src="img/immetra_tech_logo.png" width="250">
-            </p>
-            <p>
-                <a href="mailto:sales@immetra.com">sales@immetra.com</a>
-            </p>
-            <p>
-                <strong>Immetra Technologies Sdn. Bhd.</strong><br>
-                A-5-10 Empire Tower SS16/1<br>
-                Subang Jaya, 47500<br>
-                Selangor, Malaysia
-            </p>
-            <p class="regno">
-                Co. Reg. No: 1140333-P<br>
-                MOF No: 1140333-PAAA
-            </p>
-        </div>
-        <div class="right">
-            <h1>Need code?</h1>
+<body id="top">
+
+    <!-- header
+    ================================================== -->
+    <header class="s-header">
+
+        <div class="header-logo">
+            <a class="site-logo" href="index.html">
+                <img src="images/logo.png" alt="Homepage" style="height: 30px;">
+            </a>
+        </div> <!-- end header-logo -->
+
+        <nav class="header-nav">
+
+            <a href="#0" class="header-nav__close" title="close"><span>Close</span></a>
+
+            <div class="header-nav__content">
+                <h3>Immetra Technologies</h3>
+                
+                <ul class="header-nav__list">
+                    <li class="current"><a class="smoothscroll"  href="#home" title="home">Home</a></li>
+                    <li><a class="smoothscroll"  href="#about" title="about">About</a></li>
+                    <li><a class="smoothscroll"  href="#services" title="services">Services</a></li>
+                    <li><a class="smoothscroll"  href="#works" title="works">Works</a></li>
+                    <li><a class="smoothscroll"  href="#contact" title="contact">Contact</a></li>
+                </ul>
+    
+                <!-- <p>Perspiciatis hic praesentium nesciunt. Et neque a dolorum <a href='#0'>voluptatem</a> porro iusto sequi veritatis libero enim. Iusto id suscipit veritatis neque reprehenderit.</p>
+    
+                <ul class="header-nav__social">
+                    <li>
+                        <a href="#0"><i class="fab fa-facebook"></i></a>
+                    </li>
+                    <li>
+                        <a href="#0"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li>
+                        <a href="#0"><i class="fab fa-instagram"></i></a>
+                    </li>
+                    <li>
+                        <a href="#0"><i class="fab fa-behance"></i></a>
+                    </li>
+                    <li>
+                        <a href="#0"><i class="fab fa-dribbble"></i></a>
+                    </li>
+                </ul> -->
+
+            </div> <!-- end header-nav__content -->
+
+        </nav> <!-- end header-nav -->
+
+        <a class="header-menu-toggle" href="#0">
+            <span class="header-menu-icon"></span>
+        </a>
+
+    </header> <!-- end s-header -->
+
+
+    <!-- home
+    ================================================== -->
+    <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="images/hero-bg.jpg" data-natural-width=3000 data-natural-height=2000 data-position-y=top>
+
+        <div class="shadow-overlay"></div>
+
+        <div class="home-content">
+
+            <div class="row home-content__main">
+                <h1>
+                Need code?
+                </h1>
+
+                <p>
+                Have a software project that needs to get done?<br>
+                Let us help you!
+                </p>
+            </div> <!-- end home-content__main -->
+
+        </div> <!-- end home-content -->
+
+        <ul class="home-sidelinks">
+            <li><a class="smoothscroll" href="#about">About<span>who we are</span></a></li>
+            <li><a class="smoothscroll" href="#services">Services<span>what we do</span></a></li>
+            <li><a  class="smoothscroll" href="#contact">Contact<span>get in touch</span></a></li>
+        </ul> <!-- end home-sidelinks -->
+
+        <!-- <ul class="home-social">
+            <li class="home-social-title">Follow Us</li>
+            <li><a href="#0">
+                <i class="fab fa-facebook"></i>
+                <span class="home-social-text">Facebook</span>
+            </a></li>
+            <li><a href="#0">
+                <i class="fab fa-twitter"></i>
+                <span class="home-social-text">Twitter</span>
+            </a></li>
+            <li><a href="#0">
+                <i class="fab fa-linkedin"></i>
+                <span class="home-social-text">LinkedIn</span>
+            </a></li>
+        </ul> end home-social -->
+
+        <a href="#about" class="home-scroll smoothscroll">
+            <span class="home-scroll__text">Scroll Down</span>
+            <span class="home-scroll__icon"></span>
+        </a> <!-- end home-scroll -->
+
+    </section> <!-- end s-home -->
+
+
+    <!-- about
+    ================================================== -->
+    <section id='about' class="s-about">
+
+        <div class="row section-header" data-aos="fade-up">
+            <div class="col-full">
+                <h3 class="subhead">Who We Are</h3>
+                <h1 class="display-1">We are a small team of dynamic and capable software developers.</h1>
+            </div>
+        </div> <!-- end section-header -->
+
+        <div class="row" data-aos="fade-up">
+            <div class="col-full">
+                <p class="lead">
+                We are passionate about our craft. Software development requires intricate attention to details. Every i's need to be dotted, every t's need to be crossed, and every code line need to end with semicolon.
+                Software projects need to delivered in time and on point, let us help you with that. 
+                </p>
+            </div>
+        </div> <!-- end about-desc -->
+
+    </section> <!-- end s-about -->
+
+
+    <!-- services
+    ================================================== -->
+    <section id='services' class="s-services light-gray">
+
+        <div class="row section-header" data-aos="fade-up">
+            <div class="col-full">
+                <h3 class="subhead">What We Do</h3>
+                <h1 class="display-1">Be it web, desktop, or mobile softwares, our expansive skillset can help you deliver.</h1>
+            </div>
+        </div> <!-- end section-header -->
+
+        <!-- <div class="row" data-aos="fade-up">
+            <div class="col-full">
+                <p class="lead">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse. 
+                </p>
+            </div>
+        </div> -->
+        <!-- end about-desc -->
+
+        <div class="row services-list block-1-3 block-m-1-2 block-tab-full">
+
+            <div class="col-block service-item" data-aos="fade-up">
+                <div class="service-icon  service-icon--ui-design">
+                    <i class="icon-window"></i>
+                </div>
+                <div class="service-text">
+                    <h3 class="h4">Enterprise Systems</h3>
+                    <p>
+                        We develop customized web-based systems for your enterprise needs, tailored to you unique processes and workflow.
+                    </p>
+                    <p>
+                        Technology stack:<br>
+                        ASP.NET, Microsoft SQL Server, PostgreSQL, Telerik Kendo UI, Telerik Reporting, SOAP Web Services.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-block service-item" data-aos="fade-up">
+                <div class="service-icon  service-icon--web-design">
+                    <i class="icon-earth"></i>
+                </div>  
+                <div class="service-text">
+                    <h3 class="h4">Website and CMS</h3>
+                    <p>
+                        A good website not only need to be beautifule, but most importantly clear and informative.
+                        Content Management Systems can help you with this.
+                    </p>
+                    <p>
+                        Technology stack:<br>
+                        Umbraco CMS, Bootstrap UI, Microsoft Azure.
+                    </p>
+                </div>
+            </div>
+    
+            <div class="col-block service-item" data-aos="fade-up">
+                <div class="service-icon service-icon--mobile-dev">
+                    <i class="icon-lego-block"></i>
+                </div>
+                <div class="service-text">
+                    <h3 class="h4">Mobile Development</h3>
+                    <p>
+                        Having a mobile apps empowers your product and further emphasize your branding.
+                    </p>
+                    <p>
+                        Technology stack:<br>
+                        Flutter, Firebase.
+                    </p>
+                </div>
+            </div> 
+
+            <div style="text-align: center;">
+                <img src="images/tools.png" />
+            </div>
+
+        </div> <!-- end services-list -->
+
+    </section> <!-- end s-services -->
+
+
+    <!-- works
+    ================================================== -->
+    <section id='works' class="s-works">
+                
+        <div class="row section-header" data-aos="fade-up">
+            <div class="col-full">
+                <h3 class="subhead">Featured Works</h3>
+                <h1 class="display-1">These are some of the projects that we have delivered.</h1>
+            </div>
+        </div> <!-- end section-header -->
+
         
-            <h2>Let us help you.</h2>
-            
-            <p>We are a team of dynamic and capable web application developers. We can help you get that project done!</p>
-            
-            <p>These below are our usual bread and butter.</p>
-            
-            <p>
-                <br>
-                <img src="img/tools.png">
-            </p>
+        <div class="row">
+                
+            <div class="about-process process block-1-2 block-tab-full">
+
+                <div class="process__vline-left"></div>
+                <div class="process__vline-right"></div>                
+
+            </div> <!-- end process -->
+
+        </div> <!-- end about-stats -->
+        
+        <div class="row" data-aos="fade-up">
+            <div class="col-full">
+                <p class="lead" style="font-style: italic;">
+                * Some projects are kept discreet in their description as requested by our partners and clients.
+                </p>
+            </div>
+        </div> <!-- end about-desc -->
+        
+        <!-- <div class="row masonry-wrap">
+            <div class="masonry">
+
+                <div class="masonry__brick" data-aos="fade-up">
+                    <div class="item-folio">
+
+                        <div class="item-folio__thumb">
+                            <a href="images/portfolio/gallery/g-lamp.jpg" class="thumb-link" title="Lamp" data-size="1050x700">
+                                <img src="images/portfolio/lamp.jpg" 
+                                     srcset="images/portfolio/lamp.jpg 1x, images/portfolio/lamp@2x.jpg 2x" alt="">
+                            </a>
+                        </div>
+
+                        <div class="item-folio__text">
+                            <h3 class="item-folio__title">
+                                Lamp
+                            </h3>
+                            <p class="item-folio__cat">
+                                Web Design
+                            </p>
+                        </div>
+
+                        <a href="https://www.behance.net/" class="item-folio__project-link" title="Project link">
+                            Project Link
+                        </a>
+
+                        <div class="item-folio__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde dolorem corrupti neque nisi.</p>
+                        </div>
+
+                    </div> <!-- end item-folio ->
+                </div> <!-- end masonry__brick ->
+
+                <div class="masonry__brick" data-aos="fade-up">
+                    <div class="item-folio">
+
+                        <div class="item-folio__thumb">
+                            <a href="images/portfolio/gallery/g-salad.jpg" class="thumb-link" title="Salad" data-size="1050x700">
+                                <img src="images/portfolio/salad.jpg" 
+                                     srcset="images/portfolio/salad.jpg 1x, images/portfolio/salad@2x.jpg 2x" alt="">
+                            </a>
+                        </div>
+
+                        <div class="item-folio__text">
+                            <h3 class="item-folio__title">
+                                Salad
+                            </h3>
+                            <p class="item-folio__cat">
+                                Branding
+                            </p>
+                        </div>
+
+                        <a href="https://www.behance.net/" class="item-folio__project-link" title="Project link">
+                            Project Link
+                        </a>
+
+                        <span class="item-folio__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde dolorem corrupti neque nisi.</p>
+                        </span>
+
+                    </div> <!-- end item-folio ->
+                </div> <!-- end masonry__brick ->
+
+                <div class="masonry__brick" data-aos="fade-up">
+                    <div class="item-folio">
+
+                        <div class="item-folio__thumb">
+                            <a href="images/portfolio/gallery/g-woodcraft.jpg" class="thumb-link" title="Woodcraft" data-size="1050x700">
+                                <img src="images/portfolio/woodcraft.jpg"
+                                     srcset="images/portfolio/woodcraft.jpg 1x, images/portfolio/woodcraft@2x.jpg 2x" alt="">
+                            </a>
+                        </div>
+
+                        <div class="item-folio__text">
+                            <h3 class="item-folio__title">
+                                Woodcraft
+                            </h3>
+                            <p class="item-folio__cat">
+                                Branding
+                            </p>
+                        </div>
+
+                        <a href="https://www.behance.net/" class="item-folio__project-link" title="Project link">
+                            Project Link
+                        </a>
+
+                        <span class="item-folio__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde dolorem corrupti neque nisi.</p>
+                        </span>
+
+                    </div> <!-- end item-folio ->
+                </div> <!-- end masonry__brick ->
+
+                <div class="masonry__brick" data-aos="fade-up">
+                    <div class="item-folio">
+
+                        <div class="item-folio__thumb">
+                            <a href="images/portfolio/gallery/g-liberty.jpg" class="thumb-link" title="Liberty" data-size="1050x700">
+                                <img src="images/portfolio/liberty.jpg"
+                                     srcset="images/portfolio/liberty.jpg 1x, images/portfolio/liberty@2x.jpg 2x" alt="">
+                            </a>
+                        </div>
+
+                        <div class="item-folio__text">
+                            <h3 class="item-folio__title">
+                                Liberty
+                            </h3>
+                            <p class="item-folio__cat">
+                                Web Development
+                            </p>
+                        </div>
+
+                        <a href="https://www.behance.net/" class="item-folio__project-link" title="Project link">
+                            Project Link
+                        </a>
+
+                        <span class="item-folio__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde dolorem corrupti neque nisi.</p>
+                        </span>
+
+                    </div> <!-- end item-folio ->
+                </div> <!-- end masonry__brick ->
+
+
+                <div class="masonry__brick" data-aos="fade-up">
+                    <div class="item-folio">
+
+                        <div class="item-folio__thumb">
+                            <a href="images/portfolio/gallery/g-fuji.jpg" class="thumb-link" title="Fuji" data-size="1050x700">
+                                <img src="images/portfolio/fuji.jpg"
+                                     srcset="images/portfolio/fuji.jpg 1x, images/portfolio/fuji@2x.jpg 2x" alt="">
+                            </a>
+                        </div>
+
+                        <div class="item-folio__text">
+                            <h3 class="item-folio__title">
+                                Fuji
+                            </h3>
+                            <p class="item-folio__cat">
+                                Web Design
+                            </p>
+                        </div>
+
+                        <a href="https://www.behance.net/" class="item-folio__project-link" title="Project link">
+                            Project Link
+                        </a>
+
+                        <span class="item-folio__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde dolorem corrupti neque nisi.</p>
+                        </span>
+
+                    </div> <!-- end item-folio ->
+                </div> <!-- end masonry__brick ->
+
+                <div class="masonry__brick" data-aos="fade-up">
+                    <div class="item-folio">
+
+                        <div class="item-folio__thumb">
+                            <a href="images/portfolio/gallery/g-shutterbug.jpg" class="thumb-link" title="Shutterbug" data-size="1050x700">
+                                <img src="images/portfolio/shutterbug.jpg"
+                                     srcset="images/portfolio/shutterbug.jpg 1x, images/portfolio/shutterbug@2x.jpg 2x" alt="">
+                            </a>
+                        </div>
+
+                        <div class="item-folio__text">
+                            <h3 class="item-folio__title">
+                                Lady Shutterbug
+                            </h3>
+                            <p class="item-folio__cat">
+                                Branding
+                            </p>
+                        </div>
+
+                        <a href="https://www.behance.net/" class="item-folio__project-link" title="Project link">
+                            Project Link
+                        </a>
+
+                        <span class="item-folio__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde dolorem corrupti neque nisi.</p>
+                        </span>
+
+                    </div> <!-- end item-folio ->
+                </div> <!-- end masonry__brick ->
+
+            </div> <!-- end masonry ->
+        </div> <!-- end masonry-wrap -->
+
+        <!--   
+        <div class="testimonials-wrap" data-aos="fade-up">
+
+         <div class="row">
+                <div class="col-full testimonials-header">
+                    <h2 class="h1">What Clients Are Saying.</h2>
+                </div>
+            </div>
+
+            <div class="row testimonials">
+
+                <div class="col-full testimonials__slider">
+
+                    <div class="testimonials__slide">
+                        <img src="images/avatars/user-01.jpg" alt="Author image" class="testimonials__avatar">
+                        <p>Qui ipsam temporibus quisquam velMaiores eos cumque distinctio nam accusantium ipsum. 
+                        Laudantium quia consequatur molestias delectus culpa facere hic dolores aperiam. Accusantium quos qui praesentium corpori.</p>
+                        <div class="testimonials__author">
+                            Tim Cook
+                            <span>CEO, Apple</span>
+                        </div>
+                    </div> <!-- end testimonials__slide ->
+
+                    <div class="testimonials__slide">
+                        <img src="images/avatars/user-05.jpg" alt="Author image" class="testimonials__avatar">
+                        <p>Excepturi nam cupiditate culpa doloremque deleniti repellat. Veniam quos repellat voluptas animi adipisci.
+                        Nisi eaque consequatur. Quasi voluptas eius distinctio. Atque eos maxime. Qui ipsam temporibus quisquam vel.</p>
+                        <div class="testimonials__author">
+                            Sundar Pichai
+                            <span>CEO, Google</span>
+                        </div>
+                    </div> <!-- end testimonials__slide ->
+
+                    <div class="testimonials__slide">
+                        <img src="images/avatars/user-02.jpg" alt="Author image" class="testimonials__avatar">
+                        <p>Repellat dignissimos libero. Qui sed at corrupti expedita voluptas odit. Nihil ea quia nesciunt. Ducimus aut sed ipsam.  
+                        Autem eaque officia cum exercitationem sunt voluptatum accusamus. Quasi voluptas eius distinctio.</p>
+                        <div class="testimonials__author">
+                            Satya Nadella
+                            <span>CEO, Microsoft</span>
+                        </div>
+                    </div> <!-- end testimonials__slide ->
+                    
+                </div> <!-- end testimonials__slider ->
+
+            </div> <!-- end testimonials -->
+
+        </div> <!-- end testimonials-wrap ->
+
+    </section> <!-- end s-works -->
+
+
+    <!-- stats
+    ================================================== -->
+    <!-- <section id="stats" class="s-stats">
+
+        <div class="row stats block-1-4 block-m-1-2 block-mob-full" data-aos="fade-up">
+                
+            <div class="col-block stats__col ">
+                <div class="stats__count">129</div>
+                <h5>Awards Received</h5>
+            </div>
+            <div class="col-block stats__col">
+                <div class="stats__count">1507</div>
+                <h5>Cups of Coffee</h5>
+            </div>
+            <div class="col-block stats__col">
+                <div class="stats__count">108</div>
+                <h5>Projects Completed</h5>
+            </div>
+            <div class="col-block stats__col">
+                <div class="stats__count">103</div>
+                <h5>Happy Clients</h5> 
+            </div>
+
+        </div> end stats
+
+    </section> end s-stats -->
+
+
+    <!-- contact
+    ================================================== -->
+    <section id="contact" class="s-contact">
+
+        <div class="row section-header" data-aos="fade-up">
+            <div class="col-full">
+                <h3 class="subhead subhead--light">Contact Us</h3>
+                <h1 class="display-1 display-1--light">Let's get in touch and make something great together. Idea are only as good as its implementation.</h1>
+            </div>
+        </div> <!-- end section-header -->
+
+        <div class="row">
+
+            <div class="col-full contact-main" data-aos="fade-up">
+                <p>
+                <a href="mailto:sales@immetra.com" class="contact-email">sales@immetra.com</a>
+                <span class="contact-number">+603 - 3396 0765</span>
+                </p>
+            </div> <!-- end contact-main -->
+
+        </div> <!-- end row -->
+
+        <div class="row">
+
+            <div class="col-five tab-full contact-secondary" data-aos="fade-up">
+                <h3 class="subhead subhead--light">Where To Find Us</h3>
+
+                <p class="contact-address">
+                    Immetra Technologies Sdn. Bhd.
+                    <div style="font-size: 80%; display:block; margin: -35px 0 10px 0">
+                        Company Reg: 1140333-P
+                    </div>
+                    No. 13A, Jalan Niaga Bestari 6,<br> 
+                    Puncak Bestari,<br> 
+                    42300 Bandar Puncak Alam,<br>
+                    Selangor, Malaysia.
+                </p>
+
+                
+            </div> <!-- end contact-secondary -->
+
+            <div class="col-five tab-full contact-secondary" data-aos="fade-up">
+                <!-- <h3 class="subhead subhead--light">Follow Us</h3>
+
+                <ul class="contact-social">
+                    <li>
+                        <a href="#0"><i class="fab fa-facebook"></i></a>
+                    </li>
+                    <li>
+                        <a href="#0"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li>
+                        <a href="#0"><i class="fab fa-instagram"></i></a>
+                    </li>
+                    <li>
+                        <a href="#0"><i class="fab fa-behance"></i></a>
+                    </li>
+                    <li>
+                        <a href="#0"><i class="fab fa-dribbble"></i></a>
+                    </li>
+                </ul> end contact-social -->
+
+                <!-- <div class="contact-subscribe">
+                    <form id="mc-form" class="group mc-form" novalidate="true">
+                        <input type="email" value="" name="EMAIL" class="email" id="mc-email" placeholder="Email Address" required="">
+                        <input type="submit" name="subscribe" value="Subscribe">
+                        <label for="mc-email" class="subscribe-message"></label>
+                    </form>
+                </div> end contact-subscribe -->
+            </div> <!-- end contact-secondary -->
+
+        </div> <!-- end row -->
+
+        <div class="row">
+            <div class="col-full cl-copyright">
+                <span style="opacity: 10%;"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span> 
+            </div>
+        </div>
+
+        <div class="cl-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top"><i class="icon-arrow-up" aria-hidden="true"></i></a>
+        </div>
+
+    </section> <!-- end s-contact -->
+
+
+    <!-- photoswipe background
+    ================================================== -->
+    <div aria-hidden="true" class="pswp" role="dialog" tabindex="-1">
+
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button> <button class="pswp__button pswp__button--share" title=
+                    "Share"></button> <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button> <button class="pswp__button pswp__button--zoom" title=
+                    "Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button> <button class="pswp__button pswp__button--arrow--right" title=
+                "Next (arrow right)"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div> <!-- end photoSwipe background -->
+
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader">            
         </div>
     </div>
-    
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        $(function(){
+            var projs = [
+            {
+                title: "Complaint and Claims System",
+                desc: "A web system that allows customer to submit complaints that will be processed by support personnel, leading up to claims approval and payment.",
+            },      
+            {  
+                title: "Distribution Box Monitoring",
+                desc: "A front-end for an OPC/SCADA that shows graphical status of some electrical distribution (DB) boxes spread across the nation. The application interacts with an OPC server to acquire the status, gather reports, and show alerts. and also able to initiate actions such as resetting a circuit breaker switch.",
+            },      
+            {  
+                title: "Courier Sales and Billing System",
+                desc: "Sales and billing system for a courier business to manage it's contract customers and their billings. This includes the registration process for contract customers, products and pricing, rebates and discounts, disputes management, and invoice generation.",
+            },      
+            {  
+                title: "Communication Line Status Monitoring",
+                desc: "A front-end for an OPC/SCADA setup that shows graphical status of communication devices of a military agency. The application interacts with an OPC server to acquire the status, gather reports, and alerts.",
+            },      
+            {  
+                title: "Feedback Management System",
+                desc: "Starting with a feedback form from the corporate website, a suggestion, complaint, or enquiry is then routed to appropriate departments for action. A designated customer service representative then replies with a proper follow-up. ",
+            },      
+            {  
+                title: "Question Bank System",
+                desc: "A system to compose and collect questions for exams. Question will go through various QA to ensure its quality. Exam papers can then be generated on the fly based on pre-define templates. ",
+            },      
+            {  
+                title: "Key Performance Indicator Tracking System",
+                desc: "A system to register and assign KPI items and areas for employee. Outcomes can then be rated and assessed. Integrated with SAP Human Resource module.  ",
+            },      
+            {  
+                title: "Investigation Record System",
+                desc: "A system to register reports of misuse and tampering of company assets which SITREP and further investigations can be done. SLA is put is place to ensure responsiveness.",
+            },      
+            {  
+                title: "Capital Expenditure Budget System",
+                desc: "Management and approval of budget allocation, requests and returns from division to departments and projects. Integrated with SAP Investment Management module.",
+            },      
+            // {  
+            //     title: "Shutdown Notice System",
+            //     desc: "A system for an energy provider company to manage orchestration of scheduled and unscheduled system shutdown with notices to stakeholders. Integrates with a third party job order management system.",
+            // },      
+            {  
+                title: "Fibre Optic Leasing System",
+                desc: "A system to manage leasing request, commisioning, terminations, and billing of fibre optic infrastructure and services. Intergrates with third party Asset Management System and SAP Billing module.",
+            },      
+            // {  
+            //     title: "Home Energy Consumption Calculator",
+            //     desc: "A public facing website that allows home owners to calculate energy consumption based on appliances and equipments in their house.",
+            // },      
+            {  
+                title: "Idea Bank System",
+                desc: "Provides methods for submission of ideas which then can be peer-evaluated, endorsed, and implemented. Outcome then can tracked and monitored using reports and scorecards.",
+            },      
+            // {  
+            //     title: "Energy Tariff Toolkit",
+            //     desc: "A web based toolkit to simulate energy tariff comparison to help customers make better budgetary decision for their needs. ",
+            // },      
+            {  
+                title: "Project Progress Dashboard",
+                desc: "An executive dashboard and statistics for projects management. Integrated with Microsoft Enterprise Project Management Server.",
+            },      
+            {  
+                title: "Vendor Registration Portal",
+                desc: "Provides means for suppliers and contractors to submit their application to be vendors for an organization. Modules include registration, evaluation, performance tracking, training, event and surveys.",
+            },      
+            {  
+                title: "Product Certification System",
+                desc: "Allows manufacturer to acquire certification for their products from a government agency. Includes assessement, surveillance, quotation generation, and QR code distribution modules.",
+            },      
+            // {  
+            //     title: "Disciplinary and Integrity Misconduct Tracker",
+            //     desc: "A system that provides the public to report misconducts of company employees. Reports then can be investigated through multiple stages up to prosecution and appeal. ",
+            // },
+            ];
+            
+            var i = 0;
+            projs.forEach(function(p) {
+                $(".about-process").append('<div class="col-block process__col" data-item="' + (i++).toString().padStart(2, "0") + '" data-aos="fade-up"><div class="process__text"><h4>' + p.title + '</h4><p>' + p.desc + '</p></div></div>');
+            })
+            
+        })
+    </script>
+
 </body>
+
 </html>
