@@ -67,7 +67,7 @@
             flex-direction: column;
         }
 
-        body > .main {
+        body>.main {
             flex: 1;
         }
     </style>
@@ -88,13 +88,14 @@
                 </div>
                 <form class="ui form" id="input-form" style="display:none">
                     <div class="field">
-                        <label>Copy all text from the Daily Business Done page and paste them here. You can also paste in previously exported data.</label>
+                        <label>Copy all text from the Daily Business Done page and paste them here. You can also paste
+                            in previously exported data.</label>
                         <textarea id="input-txt"></textarea>
                     </div>
                     <button class="ui green button" type="button" id="process-btn">Process</button>
                     <button class="ui button" type="button" id="cancel-btn">Cancel</button>
                 </form>
-        
+
                 <form class="ui form" id="export-form" style="display:none">
                     <div class="field">
                         <label>Copy and paste the content of this box into text file or Excel.</label>
@@ -112,27 +113,29 @@
                                 <div class="ui button" id="disp-trade-stock-btn">Trades (By Stock)</div>
                                 <div class="ui button" id="disp-trade-date-btn">Trades (By Date)</div>
                             </div>
-                        </div>    
+                        </div>
                         <div class="four wide field">
                             <select class="ui fluid dropdown" id="stock-selector">
                             </select>
                         </div>
                     </div>
                 </form>
-            </div>            
+            </div>
             <!-- <div class="column" id="result-container">
             </div>             -->
         </div>
 
         <div class="ui one column grid" id="output-grid">
         </div>
-        
+
     </div>
 
     <div class="ui inverted vertical footer segment">
         <div class="ui center aligned container">
             <div class="ui horizontal inverted small divided link list">
-                <a class="item" href="http://immetra.com">Copyright &copy; <script>document.write(new Date().getFullYear());</script> Immetra Technologies &mdash; http://immetra.com</a>
+                <a class="item" href="http://immetra.com">Copyright &copy;
+                    <script>document.write(new Date().getFullYear());</script> Immetra Technologies &mdash;
+                    http://immetra.com</a>
             </div>
         </div>
     </div>
@@ -147,8 +150,8 @@
             function getTrades() {
                 var data = JSON.parse(localStorage.getItem("DBD__TRADES"));
                 if (data) {
-                    var stockNames = [];                    
-                    data.forEach(function(d) {
+                    var stockNames = [];
+                    data.forEach(function (d) {
                         d.date = new Date(d.date);
                         stockNames.push(d.stockName);
                     })
@@ -156,7 +159,7 @@
                     updateStockSelector(stockNames);
 
                     if (window.filterStock)
-                        return data.filter(function(d) { return d.stockName == window.filterStock })
+                        return data.filter(function (d) { return d.stockName == window.filterStock })
                     else
                         return data;
                 } else {
@@ -187,14 +190,14 @@
 
             function displayPositions() {
                 var openPos = [];
-                var closedPos = [];                
+                var closedPos = [];
                 var trades = getTrades();
 
                 trades.forEach(function (trade) {
-                    var idx = openPos.findIndex(function(p) { return p.stockName == trade.stockName && p.isClosed == false });
+                    var idx = openPos.findIndex(function (p) { return p.stockName == trade.stockName && p.isClosed == false });
                     var pos = null;
                     if (idx >= 0) {
-                        pos = openPos[idx];                        
+                        pos = openPos[idx];
                     } else {
                         pos = new Position(trade.stockName);
                         openPos.push(pos);
@@ -204,7 +207,7 @@
                     var newClosed = pos.addTrade(trade);
 
                     if (newClosed) {
-                                                closedPos.push(newClosed);
+                        closedPos.push(newClosed);
                     } else if (pos.isClosed) {
                         openPos.splice(idx, 1);
                         closedPos.push(pos);
@@ -219,11 +222,11 @@
                 var totalLose = 0;
 
                 var htmlClosed = '<div class="column"><h4 class="ui top attached block header">Closed Positions</h4>'
-                            + '<table class="ui bottom attached compact table">'
-                            + '    <thead><tr><th>Sell Date</th><th>Stock</th><th>Qty</th><th>Avg Buy</th><th>Avg Sell</th><th>Net Buy</th><th>Net Sell</th><th>Profit/Loss</th></tr><thead>'
-                            + '    <tbody>';
+                    + '<table class="ui bottom attached compact table">'
+                    + '    <thead><tr><th>Sell Date</th><th>Stock</th><th>Qty</th><th>Avg Buy</th><th>Avg Sell</th><th>Net Buy</th><th>Net Sell</th><th>Profit/Loss</th></tr><thead>'
+                    + '    <tbody>';
 
-                closedPos.forEach(function(pos) {                    
+                closedPos.forEach(function (pos) {
                     htmlClosed += '<tr>'
                         + '<td>' + formatDate(pos.lastTradeOn) + '</td>'
                         + '<td>' + pos.stockName + '</td>'
@@ -236,22 +239,22 @@
                         + '</tr>'
 
                     totalProfit += pos.profit;
-                    if (pos.profit > 0) 
-                        totalWin++; 
-                    else 
+                    if (pos.profit > 0)
+                        totalWin++;
+                    else
                         totalLose++;
-                });                
+                });
                 htmlClosed += '</tbody></table></div>';
-                
+
                 //
                 // Open positions
                 //
                 var htmlOpen = '<div class="column"><h4 class="ui top attached block header">Open Positions</h4>'
-                        + '<table class="ui bottom attached compact table">'
-                        + '    <thead><tr><th>Sell Date</th><th>Stock</th><th>Qty</th><th>Avg Buy</th><th>Avg Sell</th><th>Net Buy</th><th>Net Sell</th><th>Profit/Loss</th></tr><thead>'
-                        + '    <tbody>';
-                                
-                openPos.forEach(function(pos) {
+                    + '<table class="ui bottom attached compact table">'
+                    + '    <thead><tr><th>Sell Date</th><th>Stock</th><th>Qty</th><th>Avg Buy</th><th>Avg Sell</th><th>Net Buy</th><th>Net Sell</th><th>Profit/Loss</th></tr><thead>'
+                    + '    <tbody>';
+
+                openPos.forEach(function (pos) {
                     htmlOpen += '<tr>'
                         + '<td>' + formatDate(pos.lastTradeOn) + '</td>'
                         + '<td>' + pos.stockName + '</td>'
@@ -263,18 +266,18 @@
                         + '<td class="ui right aligned">-</td>'
                         + '</tr>'
                 });
-                    
+
                 htmlOpen += '</tbody></table></div>';
-                
+
                 var htmlSummary = '<div class="column"><h4 class="ui top attached block header">Summary</h4>'
-                        + '<table class="ui bottom attached compact table">'
-                        + '    <thead><tr><th class="ui center aligned">Winning Rate</th><th class="ui center aligned">Total Profit / Loss</th></tr><thead>'
-                        + '    <tbody>'
-                        + '<tr>'
-                        + '<td class="ui center aligned ' + (totalWin > totalLose ? 'green' : 'red') + '">' + totalWin + ' : ' + totalLose + '</td>'
-                        + '<td class="ui center aligned ' + (totalProfit > 0 ? 'green' : 'red') + '">' + formatMoney(totalProfit) + '</td>'
-                        + '</tr>'
-                        + '</tbody></table></div>';
+                    + '<table class="ui bottom attached compact table">'
+                    + '    <thead><tr><th class="ui center aligned">Winning Rate</th><th class="ui center aligned">Total Profit / Loss</th></tr><thead>'
+                    + '    <tbody>'
+                    + '<tr>'
+                    + '<td class="ui center aligned ' + (totalWin > totalLose ? 'green' : 'red') + '">' + totalWin + ' : ' + totalLose + '</td>'
+                    + '<td class="ui center aligned ' + (totalProfit > 0 ? 'green' : 'red') + '">' + formatMoney(totalProfit) + '</td>'
+                    + '</tr>'
+                    + '</tbody></table></div>';
 
                 var html = htmlSummary + htmlClosed + htmlOpen + '<div class="column"></div>';
                 $("#output-grid").html(html);
@@ -283,29 +286,27 @@
 
             function displayTradesByStock() {
                 displayTradesBy(
-                    function(trade) { return trade.stockName },
-                    function(group) { return group.groupBy },
+                    function (trade) { return trade.stockName },
+                    function (group) { return group.groupBy }
                 );
                 selectDisplayButton("disp-trade-stock-btn");
             }
 
             function displayTradesByDate() {
                 displayTradesBy(
-                    function(trade) { return trade.date },
-                    function(group) { return formatDate(group.groupBy) },
+                    function (trade) { return trade.date },
+                    function (group) { return formatDate(group.groupBy) },
+                    dateSortFunc
                 );
                 selectDisplayButton("disp-trade-date-btn");
             }
 
-            function displayTradesBy(groupByFn, headerFormatFunc) {
+            function displayTradesBy(groupByFn, headerFormatFunc, sortFunc) {
                 var groups = {};
                 var trades = getTrades();
 
-                console.log(trades);
-
                 trades.forEach(function (trade) {
                     var groupBy = groupByFn(trade);
-                    console.log(groupBy);
 
                     var grp = groups[groupBy];
                     if (!grp) {
@@ -321,23 +322,25 @@
 
                 var groupKeys = Object.keys(groups);
                 if (groupKeys) {
-                    groupKeys.sort();
+                    groupKeys.sort(sortFunc);
+                    console.log(groupKeys);
+
                     groupKeys.forEach(function (groupBy) {
                         var grp = groups[groupBy];
-                        
+
                         totalProfit += grp.profit;
 
                         html += '<div class="column"><h4 class="ui top attached block header">' + headerFormatFunc(grp) + '</h4>'
-                                + '<table class="ui bottom attached compact table">'
-                                + '  <thead><tr>'                                    
-                                + '    <th>Date</th>'
-                                + '    <th>Stock</th>'
-                                + '    <th>Type</th>'
-                                + '    <th>Quantity</th>'
-                                + '    <th>Price</th>'
-                                + '    <th>Fees</th>'
-                                + '    <th>Net</th></tr></thead><tbody>';
-                                
+                            + '<table class="ui bottom attached compact table">'
+                            + '  <thead><tr>'
+                            + '    <th>Date</th>'
+                            + '    <th>Stock</th>'
+                            + '    <th>Type</th>'
+                            + '    <th>Quantity</th>'
+                            + '    <th>Price</th>'
+                            + '    <th>Fees</th>'
+                            + '    <th>Net</th></tr></thead><tbody>';
+
                         grp.trades.forEach(function (trade) {
                             html += '<tr>'
                                 + '  <td>' + formatDate(trade.date) + '</td>'
@@ -350,37 +353,37 @@
                         });
 
                         html += '<tfoot><tr><td colspan="6" class="ui right aligned">Profit / Loss</td><td class="ui right aligned ' + (grp.profit > 0 ? 'green' : 'red') + '">' + formatMoney(grp.profit) + '</td><tr></tfoot>';
-                            
+
                         html += '</tbody></table></div>';
                     })
                 }
 
                 $("#output-grid").html(html + '<div class="column"></div>');
             }
-            
+
             function exportData() {
                 var str = "date\tstockCode\tstockName\ttype\trefNo\tunitCount\tprice\tbrokerageFee\tstampingFee\tclearingFee\tsst\tnetAmount\n"
                 getTrades().forEach(function (t) {
-                    str += formatDate(t.date) + "\t" 
-                            + t.stockCode + "\t" 
-                            + t.stockName + "\t" 
-                            + t.type + "\t" 
-                            + t.refNo + "\t" 
-                            + t.unitCount + "\t" 
-                            + t.price + "\t" 
-                            + t.brokerageFee + "\t" 
-                            + t.stampingFee + "\t" 
-                            + t.clearingFee + "\t" 
-                            + t.sst + "\t" 
-                            + t.netAmount + "\n"
+                    str += formatDate(t.date) + "\t"
+                        + t.stockCode + "\t"
+                        + t.stockName + "\t"
+                        + t.type + "\t"
+                        + t.refNo + "\t"
+                        + t.unitCount + "\t"
+                        + t.price + "\t"
+                        + t.brokerageFee + "\t"
+                        + t.stampingFee + "\t"
+                        + t.clearingFee + "\t"
+                        + t.sst + "\t"
+                        + t.netAmount + "\n"
                 });
-                return str; 
+                return str;
             }
 
             function Position(stockName) {
                 this.stockName = stockName;
                 this.trades = [];
-                
+
                 this.unitCount = 0;
                 this.avgBuy = 0.0;
                 this.avgSell = 0.0;
@@ -388,19 +391,19 @@
                 this.netSell = 0.0;
                 this.profit = 0.0;
                 this.lastTradeOn = null;
-                this.isClosed = false;                
+                this.isClosed = false;
 
                 this.addTrade = function (trade) {
 
-                    
+
                     this.lastTradeOn = trade.date;
                     if (trade.type == "Buy") {
-                        this.unitCount += trade.unitCount;      
-                        this.netBuy += trade.netAmount;                  
+                        this.unitCount += trade.unitCount;
+                        this.netBuy += trade.netAmount;
                         this.avgBuy = this.netBuy / this.unitCount;
                     } else {
                         if (trade.unitCount > this.unitCount) {
-                                                        return;
+                            return;
                         }
                         var unitBalance = this.unitCount - trade.unitCount;
                         if (unitBalance > 0) {
@@ -432,13 +435,13 @@
 
             function TradeGroup(groupBy) {
                 this.groupBy = groupBy;
-                this.trades = [];                
+                this.trades = [];
                 this.profit = 0.0;
-                
+
                 this.addTrade = function (trade) {
                     this.trades.push(trade);
                     this.trades.sort(tradeSortFunc);
-                    
+
                     var profit = 0.0;
                     this.trades.forEach(function (trade) {
                         if (trade.type == "Buy") {
@@ -453,9 +456,8 @@
 
             function createTrade(str) {
                 var m = str.match(/.*(\d\d\/\d\d\/\d{4})\s+(\w+)\s+([^\s]+)\s+(\w+)\s+(\w+)\s+([,\d]+)\s+([\.\d]+)\s+([\.\d]+)\s+([\.\d]+)\s+([\.\d]+)\s+([\.\d]+)\s+([\,\.\d]+).*/);
-                console.log(m);
                 var mDate = m[1].match(/(\d\d)\/(\d\d)\/(\d{4})/);
-                
+
                 var obj = {
                     date: new Date(mDate[3], parseInt(mDate[2]) - 1, mDate[1]),
                     stockCode: m[2],
@@ -483,15 +485,18 @@
                 dt = trade.date.getDate();
                 if (dt < 10) { dt = '0' + dt; }
                 if (month < 10) { month = '0' + month; }
-                
+
                 var key = "" + year + month + dt + trade.type;
-                // console.log(year, month, dt, key);
-                // if (key == "2062Buy") console.log(trade);
                 return key;
             }
 
             function tradeSortFunc(a, b) {
                 return getTradeSortKey(a).localeCompare(getTradeSortKey(b));
+            }
+
+            function dateSortFunc(a, b) {
+                var d1 = new Date(a), d2 = new Date(b);
+                return d2 - d1;
             }
 
             function convertInt(str) {
@@ -543,8 +548,8 @@
                 if (stockNames) {
                     var names = stockNames.filter(function (x, i, a) { return a.indexOf(x) == i; });
                     names.sort();
-                    names.forEach(function(stock) {
-                        el.append('<option value="' + stock + '">' + stock + '</option>');                    
+                    names.forEach(function (stock) {
+                        el.append('<option value="' + stock + '">' + stock + '</option>');
                     });
                 }
                 el.val(window.filterStock);
@@ -569,7 +574,7 @@
                 }
             });
 
-            $("#export-btn").click(function(){
+            $("#export-btn").click(function () {
                 $("#export-txt").val(exportData());
                 toggleExport();
             });
@@ -581,7 +586,7 @@
                 $("#" + btnId).addClass("active");
             }
 
-            $("#disp-btns .button").click(function(e) {
+            $("#disp-btns .button").click(function (e) {
                 var id = $(e.currentTarget).attr("id");
                 switch (id) {
                     case "disp-pos-btn": displayPositions(); break;
@@ -590,9 +595,9 @@
                 }
             })
 
-            $("#stock-selector").change(function(e) {
+            $("#stock-selector").change(function (e) {
                 var el = $(e.currentTarget);
-                window.filterStock = el.val();           
+                window.filterStock = el.val();
                 displayPositions();
             })
 
