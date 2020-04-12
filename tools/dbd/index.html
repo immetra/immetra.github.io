@@ -20,36 +20,7 @@
     <!-- Site Properties -->
     <title>Daily Business Done Processor</title>
 
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/reset.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/site.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/container.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/grid.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/header.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/image.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/form.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/button.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/table.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/divider.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/list.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/segment.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/card.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/icon.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/components/label.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/semantic.min.css">        
 
     <style type="text/css">
         body {
@@ -150,11 +121,33 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.4/semantic.min.js"></script>
+
+    <div class="ui basic modal">
+        <div class="ui icon header">
+            <i class="archive icon"></i>
+            Header
+        </div>
+        <div class="content">
+            <p>Content</p>
+        </div>
+        <div class="actions">
+            <div class="ui red basic cancel inverted button">
+            <i class="remove icon"></i>
+            No
+            </div>
+            <div class="ui green ok inverted button">
+            <i class="checkmark icon"></i>
+            Yes
+            </div>
+        </div>
+    </div>
 
     <script>
         $(function () {
+            //$('.ui.basic.modal').modal('show');
+
             window.filterStock = "";
 
             function getTrades() {
