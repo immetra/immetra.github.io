@@ -90,9 +90,9 @@
                     <div class="two fields">
                         <div class="twelve wide field">
                             <div class="ui basic buttons" id="disp-btns">
-                                <div class="ui button active" id="disp-pos-btn">Positions</div>
-                                <div class="ui button" id="disp-trade-stock-btn">Trades (By Stock)</div>
-                                <div class="ui button" id="disp-trade-date-btn">Trades (By Date)</div>
+                                <div class="ui button active" id="disp-pos-date-btn">Positions (By Date)</div>
+                                <div class="ui button" id="disp-pos-stock-btn">Positions (By Stock)</div>
+                                <div class="ui button" id="disp-trade-btn">Trades</div>
                             </div>
                         </div>
                         <div class="four wide field">
@@ -191,11 +191,14 @@
                 displayPositions();
             }
 
-            function displayPositions() {
+            function displayPositions(groupBy) {
                 var openPos = [];
                 var closedPos = [];
                 var trades = getTrades();
 
+                if (!groupBy) groupBy = "date";
+
+                // Build positions from trades
                 trades.forEach(function (trade) {
                     var idx = openPos.findIndex(function (p) { return p.stockName == trade.stockName && p.isClosed == false });
                     var pos = null;
@@ -216,45 +219,90 @@
                         closedPos.push(pos);
                     }
                 });
-
-                //
-                // Closed positions
-                //
+                
+                // Build position groups and summary
                 var totalProfit = 0.0;
+                var totalRoi = 0.0;
                 var totalWin = 0;
                 var totalLose = 0;
-
-                var htmlClosed = '<div class="column"><h4 class="ui top attached block header">Closed Positions</h4>'
-                    + '<table class="ui bottom attached compact table">'
-                    + '    <thead><tr><th>Sell Date</th><th>Stock</th><th>Qty</th><th>Avg Buy</th><th>Avg Sell</th><th>Net Buy</th><th>Net Sell</th><th>Profit/Loss</th></tr><thead>'
-                    + '    <tbody>';
+                
+                var groups = {};
 
                 closedPos.forEach(function (pos) {
-                    htmlClosed += '<tr>'
-                        + '<td>' + formatDate(pos.lastTradeOn) + '</td>'
-                        + '<td>' + pos.stockName + '</td>'
-                        + '<td class="ui right aligned">' + (pos.unitCount) + '</td>'
-                        + '<td class="ui right aligned">' + formatPrice(pos.avgBuy) + '</td>'
-                        + '<td class="ui right aligned">' + formatPrice(pos.avgSell) + '</td>'
-                        + '<td class="ui right aligned">' + formatMoney(pos.netBuy) + '</td>'
-                        + '<td class="ui right aligned">' + formatMoney(pos.netSell) + '</td>'
-                        + '<td class="ui right aligned ' + (pos.profit > 0 ? 'green' : 'red') + '">' + formatMoney(pos.profit) + '</td>'
-                        + '</tr>'
 
+                    // Grouping
+                    var groupKey = (groupBy == "date") ? pos.lastTradeOn : pos.stockName;
+                    var grp = groups[groupKey];
+                    if (!grp) {
+                        grp = new PositionGroup(groupKey);
+                        groups[groupKey] = grp;
+                    }
+                    grp.addPosition(pos);
+                    
+                    // Summary
                     totalProfit += pos.profit;
+                    totalRoi += pos.roi;
                     if (pos.profit > 0)
                         totalWin++;
                     else
                         totalLose++;
                 });
-                htmlClosed += '</tbody></table></div>';
+
+                
+                //
+                // Closed positions
+                //
+                var htmlClosed = '<h3 class="ui header">Closed Positions</h3>';
+
+                var groupKeys = Object.keys(groups);
+                if (groupKeys) {
+                    groupKeys.sort(groupBy == "date" ? dateSortFunc : undefined);
+                    groupKeys.forEach(function (groupKey) {
+                        var grp = groups[groupKey];
+
+                        var groupHeader = (groupBy == "date") ? formatDate(grp.groupKey) : grp.groupKey;
+
+                        htmlClosed += '<div class="column"><h4 class="ui top attached block header">' + groupHeader + '</h4>'
+                        + '<table class="ui bottom attached compact table">'
+                        +   '<thead><tr><th>' + (groupBy == "date" ? "Stock" : "Sell Date") + '</th>'
+                        +   '<th>Qty</th>'
+                        +   '<th class="ui right aligned">Avg Buy</th>'
+                        +   '<th class="ui right aligned">Avg Sell</th>'
+                        +   '<th class="ui right aligned">Net Buy</th>'
+                        +   '<th class="ui right aligned">Net Sell</th>'
+                        +   '<th class="ui right aligned">Profit/Loss</th>'
+                        +   '<th class="ui right aligned">ROI %</th></tr></thead>'
+                        + '    <tbody>';
+                        
+                        grp.positions.forEach(function (pos) {
+                            htmlClosed += '<tr>'
+                                + '<td>' + (groupBy == "date" ? pos.stockName : formatDate(pos.lastTradeOn)) + '</td>'
+                                + '<td class="ui right aligned">' + (pos.unitCount) + '</td>'
+                                + '<td class="ui right aligned">' + formatPrice(pos.avgBuy) + '</td>'
+                                + '<td class="ui right aligned">' + formatPrice(pos.avgSell) + '</td>'
+                                + '<td class="ui right aligned">' + formatMoney(pos.netBuy) + '</td>'
+                                + '<td class="ui right aligned">' + formatMoney(pos.netSell) + '</td>'
+                                + '<td class="ui right aligned ' + (pos.profit > 0 ? 'green' : 'red') + '">' + formatMoney(pos.profit) + '</td>'
+                                + '<td class="ui right aligned ' + (pos.profit > 0 ? 'green' : 'red') + '">' + formatPercent(pos.roi) + '</td>'
+                                + '</tr>'
+                        });
+                        htmlClosed += '</tbody>'
+                                    + '<tfoot><tr><td colspan="6" class="ui right aligned">Total</td>'
+                                    // + '<td class="ui right aligned">' + formatMoney(grp.totalBuy) + '</td>'
+                                    // + '<td class="ui right aligned">' + formatMoney(grp.totalSell) + '</td>'
+                                    +   '<td class="ui right aligned ' + (grp.profit > 0 ? 'green' : 'red') + '">' + formatMoney(grp.profit) + '</td>'
+                                    +   '<td class="ui right aligned ' + (grp.profit > 0 ? 'green' : 'red') + '">' + formatPercent(grp.roi) + '</td>'
+                                    + '<tr></tfoot>'
+                                    + '</table></div>';
+                    })
+                }
 
                 //
                 // Open positions
                 //
-                var htmlOpen = '<div class="column"><h4 class="ui top attached block header">Open Positions</h4>'
-                    + '<table class="ui bottom attached compact table">'
-                    + '    <thead><tr><th>Sell Date</th><th>Stock</th><th>Qty</th><th>Avg Buy</th><th>Avg Sell</th><th>Net Buy</th><th>Net Sell</th><th>Profit/Loss</th></tr><thead>'
+                var htmlOpen = '<div class="column"><h3 class="ui header">Open Positions</h3>'
+                    + '<table class="ui compact table">'
+                    + '    <thead><tr><th>Latest Buy</th><th>Stock</th><th class="ui right aligned">Qty</th><th class="ui right aligned">Avg Buy</th><th class="ui right aligned">Net Buy</th></tr><thead>'
                     + '    <tbody>';
 
                 openPos.forEach(function (pos) {
@@ -263,107 +311,64 @@
                         + '<td>' + pos.stockName + '</td>'
                         + '<td class="ui right aligned">' + (pos.unitCount) + '</td>'
                         + '<td class="ui right aligned">' + formatPrice(pos.avgBuy) + '</td>'
-                        + '<td class="ui right aligned">-</td>'
                         + '<td class="ui right aligned">' + formatMoney(pos.netBuy) + '</td>'
-                        + '<td class="ui right aligned">-</td>'
-                        + '<td class="ui right aligned">-</td>'
                         + '</tr>'
                 });
 
                 htmlOpen += '</tbody></table></div>';
 
-                var htmlSummary = '<div class="column"><h4 class="ui top attached block header">Summary</h4>'
-                    + '<table class="ui bottom attached compact table">'
-                    + '    <thead><tr><th class="ui center aligned">Winning Rate</th><th class="ui center aligned">Total Profit / Loss</th></tr><thead>'
+                var htmlSummary = '<div class="column"><h3 class="ui header">Summary</h3>'
+                    + '<table class="ui compact table">'
+                    + '    <thead><tr><th class="ui center aligned">Winning Rate</th>'
+                    +  '    <th class="ui center aligned">Total Profit / Loss</th>'
+                    +  '    <th class="ui center aligned">Total ROI %</th></tr><thead>'
                     + '    <tbody>'
                     + '<tr>'
                     + '<td class="ui center aligned ' + (totalWin > totalLose ? 'green' : 'red') + '">' + totalWin + ' : ' + totalLose + '</td>'
                     + '<td class="ui center aligned ' + (totalProfit > 0 ? 'green' : 'red') + '">' + formatMoney(totalProfit) + '</td>'
+                    + '<td class="ui center aligned ' + (totalRoi > 0 ? 'green' : 'red') + '">' + formatPercent(totalRoi) + '</td>'
                     + '</tr>'
                     + '</tbody></table></div>';
 
-                var html = htmlSummary + htmlClosed + htmlOpen + '<div class="column"></div>';
+                var html = htmlSummary + htmlOpen + htmlClosed + '<div class="column"></div>';
                 $("#output-grid").html(html);
-                selectDisplayButton("disp-pos-btn");
+                selectDisplayButton("disp-pos-"+ groupBy + "-btn");
             }
 
-            function displayTradesByStock() {
-                displayTradesBy(
-                    function (trade) { return trade.stockName },
-                    function (group) { return group.groupBy }
-                );
-                selectDisplayButton("disp-trade-stock-btn");
-            }
-
-            function displayTradesByDate() {
-                displayTradesBy(
-                    function (trade) { return trade.date },
-                    function (group) { return formatDate(group.groupBy) },
-                    dateSortFunc
-                );
-                selectDisplayButton("disp-trade-date-btn");
-            }
-
-            function displayTradesBy(groupByFn, headerFormatFunc, sortFunc) {
-                var groups = {};
+            function displayTrades() {
                 var trades = getTrades();
+                trades.sort(tradeSortFuncDesc);
+
+                var html = '<h3 class="ui header">List of Trades</h3>';
+
+                html += '<div class="column">'
+                    + '<table class="ui compact table">'
+                    + '  <thead><tr>'
+                    + '    <th>Date</th>'
+                    + '    <th>Stock</th>'
+                    + '    <th>Type</th>'
+                    + '    <th class="ui right aligned">Quantity</th>'
+                    + '    <th class="ui right aligned">Price</th>'
+                    + '    <th class="ui right aligned">Fees</th>'
+                    + '    <th class="ui right aligned">Net Amount</th></tr></thead><tbody>';
 
                 trades.forEach(function (trade) {
-                    var groupBy = groupByFn(trade);
-
-                    var grp = groups[groupBy];
-                    if (!grp) {
-                        grp = new TradeGroup(groupBy);
-                        groups[groupBy] = grp;
-                    }
-                    grp.addTrade(trade);
+                    html += '<tr>'
+                        + '  <td>' + formatDate(trade.date) + '</td>'
+                        + '  <td>' + trade.stockName + '</td>'
+                        + '  <td title="' + trade.refNo + '"><span class="ui ' + (trade.type == "Buy" ? "green" : "red") + ' text">' + trade.type + '</span></td>'
+                        + '  <td class="ui right aligned">' + trade.unitCount + '</td>'
+                        + '  <td class="ui right aligned">' + formatMoney(trade.price) + '</td>'
+                        + '  <td class="ui right aligned">' + formatMoney(trade.feeTotal)
+                        + '  <td class="ui right aligned">' + formatMoney(trade.netAmount) + '</td></tr>'
                 });
-
-                var html = "";
-
-                var totalProfit = 0.0;
-
-                var groupKeys = Object.keys(groups);
-                if (groupKeys) {
-                    groupKeys.sort(sortFunc);
-                    console.log(groupKeys);
-
-                    groupKeys.forEach(function (groupBy) {
-                        var grp = groups[groupBy];
-
-                        totalProfit += grp.profit;
-
-                        html += '<div class="column"><h4 class="ui top attached block header">' + headerFormatFunc(grp) + '</h4>'
-                            + '<table class="ui bottom attached compact table">'
-                            + '  <thead><tr>'
-                            + '    <th>Date</th>'
-                            + '    <th>Stock</th>'
-                            + '    <th>Type</th>'
-                            + '    <th>Quantity</th>'
-                            + '    <th>Price</th>'
-                            + '    <th>Fees</th>'
-                            + '    <th>Net</th></tr></thead><tbody>';
-
-                        grp.trades.forEach(function (trade) {
-                            html += '<tr>'
-                                + '  <td>' + formatDate(trade.date) + '</td>'
-                                + '  <td>' + trade.stockName + '</td>'
-                                + '  <td title="' + trade.refNo + '">' + trade.type + '</td>'
-                                + '  <td>' + trade.unitCount + '</td>'
-                                + '  <td class="ui right aligned">' + formatMoney(trade.price) + '</td>'
-                                + '  <td class="ui right aligned">' + formatMoney(trade.feeTotal)
-                                + '  <td class="ui right aligned">' + formatMoney(trade.netAmount) + '</td></tr>'
-                        });
-
-                        html += '<tfoot><tr><td colspan="6" class="ui right aligned">Profit / Loss</td><td class="ui right aligned ' + (grp.profit > 0 ? 'green' : 'red') + '">' + formatMoney(grp.profit) + '</td><tr></tfoot>';
-
-                        html += '</tbody></table></div>';
-                    })
-                }
+                
+                html += '</tbody></table></div>';
 
                 $("#output-grid").html(html + '<div class="column"></div>');
+                selectDisplayButton("disp-trade-btn");
             }
-
+            
             function exportData() {
                 var str = "date\tstockCode\tstockName\ttype\trefNo\tunitCount\tprice\tbrokerageFee\tstampingFee\tclearingFee\tsst\tnetAmount\n"
                 getTrades().forEach(function (t) {
@@ -393,12 +398,11 @@
                 this.netBuy = 0.0;
                 this.netSell = 0.0;
                 this.profit = 0.0;
+                this.roi = 0.0;    
                 this.lastTradeOn = null;
                 this.isClosed = false;
 
                 this.addTrade = function (trade) {
-
-
                     this.lastTradeOn = trade.date;
                     if (trade.type == "Buy") {
                         this.unitCount += trade.unitCount;
@@ -419,7 +423,8 @@
 
                             closedPos.avgSell = trade.price;
                             closedPos.netSell = trade.netAmount;
-                            closedPos.profit = closedPos.netSell - closedPos.netBuy;
+                            closedPos.profit = closedPos.netSell - closedPos.netBuy;                            
+                            closedPos.roi = (closedPos.profit / closedPos.netBuy) * 100.0;
                             closedPos.isClosed = true;
 
                             this.unitCount = unitBalance;
@@ -431,8 +436,26 @@
                         this.avgSell = trade.price;
                         this.netSell = trade.netAmount;
                         this.profit = this.netSell - this.netBuy;
+                        this.roi = (this.profit / this.netBuy) * 100.0;
                         this.isClosed = true;
                     }
+                }
+            }
+
+            function PositionGroup(groupKey) {
+                this.groupKey = groupKey;
+                this.positions = [];
+                this.totalBuy = 0.0;
+                this.totalSell = 0.0;
+                this.profit = 0.0;    
+                this.roi = 0.0;                
+
+                this.addPosition = function (pos) {
+                    this.positions.push(pos);
+                    this.totalBuy += pos.netBuy;
+                    this.totalSell += pos.netSell;
+                    this.profit += pos.profit;  
+                    this.roi += pos.roi;
                 }
             }
 
@@ -497,6 +520,10 @@
                 return getTradeSortKey(a).localeCompare(getTradeSortKey(b));
             }
 
+            function tradeSortFuncDesc(a, b) {
+                return getTradeSortKey(b).localeCompare(getTradeSortKey(a));
+            }
+
             function dateSortFunc(a, b) {
                 var d1 = new Date(a), d2 = new Date(b);
                 return d2 - d1;
@@ -528,6 +555,10 @@
 
             function formatPrice(val) {
                 return val.toFixed(3).toString();
+            }
+
+            function formatPercent(val) {
+                return val.toFixed(1).toString();
             }
 
             function formatMoney(val) {
@@ -592,9 +623,9 @@
             $("#disp-btns .button").click(function (e) {
                 var id = $(e.currentTarget).attr("id");
                 switch (id) {
-                    case "disp-pos-btn": displayPositions(); break;
-                    case "disp-trade-stock-btn": displayTradesByStock(); break;
-                    case "disp-trade-date-btn": displayTradesByDate(); break;
+                    case "disp-pos-date-btn": displayPositions("date"); break;
+                    case "disp-pos-stock-btn": displayPositions("stock"); break;
+                    case "disp-trade-btn": displayTrades(); break;
                 }
             })
 
