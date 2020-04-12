@@ -51,6 +51,10 @@
         body>.main {
             flex: 1;
         }
+
+        .guide-list li {
+            margin-bottom: 30px;
+        }
     </style>
 
 </head>
@@ -58,9 +62,14 @@
 <body>
 
     <div class="ui main text container">
-        <h1 class="ui header">Daily Business Done Processor</h1>
 
         <div class="ui one column grid">
+            <div class="column">
+                <h1 class="ui header left floated">Daily Business Done Processor</h1>
+                <a href="#" id="help-btn" class="ui primary tertiary button right floated">
+                    Help <i class="question circle icon"></i>
+                </a>
+            </div>
             <div class="column">
                 <div id="btn-container">
                     <button class="ui left floated primary button" type="button" id="input-btn">Add Input</button>
@@ -126,28 +135,57 @@
 
     <div class="ui basic modal">
         <div class="ui icon header">
-            <i class="archive icon"></i>
-            Header
+            <i class="question icon"></i>
+            User Guide
         </div>
         <div class="content">
-            <p>Content</p>
+            <p>
+                This tool is for M+ Online users to help them make sense of the M+ Daily Business Done report. 
+                It will calculate profit/loss and summarize the trades done.
+            </p>
+            <ol class="ui ordered inverted list guide-list">
+                <li>
+                    Open “Daily Business Done” page.
+                    <img style="width:90%" src="h_mmenu.png">
+                </li>
+                <li>
+                    Select all content in the page and copy them.
+                    <img style="width:90%" src="h_mdbd.png">
+                </li>                
+                <li>
+                    Then in this tool, click on on the "Add Input" button and paste the copied content into the textarea input. 
+                    Click the "Process" button.
+                    <img style="width:90%" src="h_input.png">
+                </li>
+                <li>
+                    The tools will parse the input and produce trade summary and calculate open and closed positions.
+                </li>
+                <li>
+                    Closed positions are stocks that you have sold. Profit/loss will be calculated from these.
+                </li>
+                <li>
+                    Open positions are stocks that you bought and still holding.
+                </li>
+                <li>
+                    You can do the "Add Input" process multiple times and the tool will keep records of your input.
+                    But be careful not to add the same input multiple times, they will duplicate.
+                </li>
+                <li>
+                    Hope this helps!
+                </li>
+            </ol>
         </div>
         <div class="actions">
-            <div class="ui red basic cancel inverted button">
-            <i class="remove icon"></i>
-            No
-            </div>
             <div class="ui green ok inverted button">
-            <i class="checkmark icon"></i>
-            Yes
+                <i class="times icon"></i>
+                Close
             </div>
         </div>
     </div>
 
     <script>
         $(function () {
-            //$('.ui.basic.modal').modal('show');
-
+            
             window.filterStock = "";
 
             function getTrades() {
@@ -635,8 +673,13 @@
                 displayPositions();
             })
 
+            $("#help-btn").click(function() {
+                $('.ui.basic.modal').modal('show');
+            })
+
             // Startup
             displayPositions();
+
         });
     </script>
 </body>
