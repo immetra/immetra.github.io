@@ -102,6 +102,7 @@
                                 <div class="ui button active" id="disp-pos-date-btn">Positions (By Date)</div>
                                 <div class="ui button" id="disp-pos-stock-btn">Positions (By Stock)</div>
                                 <div class="ui button" id="disp-trade-btn">Trades</div>
+                                <div class="ui button" id="disp-monthly-btn">Monthly</div>
                             </div>
                         </div>
                         <div class="four wide field">
@@ -179,7 +180,7 @@
                     You might want to use the "Clear Data" feature first to make sure data is not duplicated.
                 </li>
                 <li>
-                    Hope this helps!
+                    Hope this helps! For bug reports and suggestions, click <a target="_blank" href="https://t.me/ikhwanhayat">here</a>.
                 </li>
             </ol>
         </div>
@@ -237,12 +238,10 @@
                 displayPositions();
             }
 
-            function displayPositions(groupBy) {
+            function buildPositions() {
                 var openPos = [];
                 var closedPos = [];
                 var trades = getTrades();
-
-                if (!groupBy) groupBy = "date";
 
                 // Build positions from trades
                 trades.forEach(function (trade) {
@@ -265,12 +264,19 @@
                         closedPos.push(pos);
                     }
                 });
+
+                return [ openPos, closedPos ];
+            }
+
+            function displayPositions(groupBy) {
+                if (!groupBy) groupBy = "date";
                 
+                var built = buildPositions();
+                var openPos = built[0];
+                var closedPos = built[1];
+
                 // Build position groups and summary
-                var totalProfit = 0.0;
-                var totalRoi = 0.0;
-                var totalWin = 0;
-                var totalLose = 0;
+                var totalProfit = 0.0, totalRoi = 0.0, totalWin = 0, totalLose = 0;
                 
                 var groups = {};
 
@@ -302,7 +308,7 @@
 
                 var groupKeys = Object.keys(groups);
                 if (groupKeys) {
-                    groupKeys.sort(groupBy == "date" ? dateSortFunc : undefined);
+                    groupKeys.sort(groupBy == "date" ? dateSortFuncDesc : undefined);
                     groupKeys.forEach(function (groupKey) {
                         var grp = groups[groupKey];
 
@@ -404,7 +410,7 @@
                         + '  <td>' + trade.stockName + '</td>'
                         + '  <td title="' + trade.refNo + '"><span class="ui ' + (trade.type == "Buy" ? "green" : "red") + ' text">' + trade.type + '</span></td>'
                         + '  <td class="ui right aligned">' + trade.unitCount + '</td>'
-                        + '  <td class="ui right aligned">' + formatMoney(trade.price) + '</td>'
+                        + '  <td class="ui right aligned">' + formatPrice(trade.price) + '</td>'
                         + '  <td class="ui right aligned">' + formatMoney(trade.feeTotal)
                         + '  <td class="ui right aligned">' + formatMoney(trade.netAmount) + '</td></tr>'
                 });
@@ -415,6 +421,100 @@
                 selectDisplayButton("disp-trade-btn");
             }
             
+            function displayMonthly() {                
+                var built = buildPositions();
+                var closedPos = built[1];
+
+                var html = '<h3 class="ui header">Monthly Performance</h3>';
+
+                html += '<div class="column">'
+                    + '<table class="ui compact table">'
+                    + '  <thead><tr>'
+                    + '    <th class="ui center aligned">Month</th>'
+                    + '    <th class="ui center aligned">Win Rate</th>'
+                    + '    <th class="ui right aligned">Profit/Loss</th>'
+                    + '    <th class="ui right aligned">ROI %</th>'
+                    + '</tr></thead><tbody>';
+
+
+                var totalProfit = 0.0, totalRoi = 0.0, totalWin = 0, totalLose = 0;
+                var overallProfit = 0.0, overallRoi = 0.0, overallWin = 0, overallLose = 0;
+
+                if (closedPos) {
+                    closedPos.sort(function(a, b) { return dateSortFunc(a.lastTradeOn, b.lastTradeOn) });
+                    
+                    var first = closedPos[0];
+
+                    var currMonth = first.lastTradeOn.getMonth();
+                    var currYear = first.lastTradeOn.getFullYear();
+
+                    for (var i=0; i < closedPos.length; i++) {
+                        var pos = closedPos[i];                        
+                        var posMonth = pos.lastTradeOn.getMonth();
+                        var posYear = pos.lastTradeOn.getFullYear();
+                        
+                        var lastPos = i == (closedPos.length-1);
+                        if (currMonth != posMonth || currYear != posYear || lastPos) {
+                        
+                            if (lastPos) {
+                                totalProfit += pos.profit;
+                                totalRoi += pos.roi;
+                                if (pos.profit > 0)
+                                    totalWin++;
+                                else
+                                    totalLose++;
+                            }
+
+                            html += '<tr>'
+                            + '  <td class="ui center aligned">' + currYear + ' &nbsp; ' + monthNames[currMonth] + '</td>'
+                            + '  <td class="ui center aligned">' + totalWin + ':' + totalLose + '</td>'
+                            + ' <td class="ui right aligned ' + (totalProfit > 0 ? 'green' : 'red') + '">' + formatMoney(totalProfit) + '</td>'
+                            + ' <td class="ui right aligned ' + (totalRoi > 0 ? 'green' : 'red') + '">' + formatPercent(totalRoi) + '</td></tr>'
+
+                            // Summary
+                            overallProfit += totalProfit;
+                            overallRoi += totalRoi;
+                            overallWin += totalWin;
+                            overallLose += totalLose;
+
+                            // Reset
+                            currMonth = posMonth;
+                            currYear = posYear;                    
+                            totalProfit = 0;
+                            totalRoi = 0;
+                            totalWin = 0;
+                            totalLose = 0;
+                        }                        
+                        
+                        totalProfit += pos.profit;
+                        totalRoi += pos.roi;
+                        if (pos.profit > 0)
+                            totalWin++;
+                        else
+                            totalLose++;
+                    }
+                }
+                html += '</tbody></table></div>';
+
+                var htmlSummary = '<div class="column"><h3 class="ui header">Summary</h3>'
+                    + '<table class="ui compact table">'
+                    + '    <thead><tr><th class="ui center aligned">Winning Rate</th>'
+                    +  '    <th class="ui center aligned">Total Profit / Loss</th>'
+                    +  '    <th class="ui center aligned">Total ROI %</th></tr><thead>'
+                    + '    <tbody>'
+                    + '<tr>'
+                    + '<td class="ui center aligned ' + (overallWin > overallLose ? 'green' : 'red') + '">' + overallWin + ' : ' + overallLose + '</td>'
+                    + '<td class="ui center aligned ' + (overallProfit > 0 ? 'green' : 'red') + '">' + formatMoney(overallProfit) + '</td>'
+                    + '<td class="ui center aligned ' + (overallRoi > 0 ? 'green' : 'red') + '">' + formatPercent(overallRoi) + '</td>'
+                    + '</tr>'
+                    + '</tbody></table></div>';
+                
+                $("#output-grid").html(htmlSummary + html + '<div class="column"></div>');
+                selectDisplayButton("disp-monthly-btn");
+            }
+
+            var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+
             function exportData() {
                 var str = "date\tstockCode\tstockName\ttype\trefNo\tunitCount\tprice\tbrokerageFee\tstampingFee\tclearingFee\tsst\tnetAmount\n"
                 getTrades().forEach(function (t) {
@@ -569,8 +669,13 @@
             function tradeSortFuncDesc(a, b) {
                 return getTradeSortKey(b).localeCompare(getTradeSortKey(a));
             }
-
+            
             function dateSortFunc(a, b) {
+                var d1 = new Date(a), d2 = new Date(b);
+                return d1 - d2;
+            }
+
+            function dateSortFuncDesc(a, b) {
                 var d1 = new Date(a), d2 = new Date(b);
                 return d2 - d1;
             }
@@ -624,7 +729,7 @@
             function updateStockSelector(stockNames) {
                 var el = $("#stock-selector");
                 el.empty();
-                el.append('<option value="">All</option>');
+                el.append('<option value="">(All)</option>');
                 if (stockNames) {
                     var names = stockNames.filter(function (x, i, a) { return a.indexOf(x) == i; });
                     names.sort();
@@ -672,6 +777,7 @@
                     case "disp-pos-date-btn": displayPositions("date"); break;
                     case "disp-pos-stock-btn": displayPositions("stock"); break;
                     case "disp-trade-btn": displayTrades(); break;
+                    case "disp-monthly-btn": displayMonthly(); break;
                 }
             })
 
